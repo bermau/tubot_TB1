@@ -5,7 +5,16 @@
 # Je veux créer une représentation simple de robot X, Y, Z
 # réalisé avec des V-slot 2020
 
+import sys
+
+from local_conf import REP_OF_MY_OPENPYSCAD            # IMPORTANT see my version in bermau/openpyscad
+
+sys.path.append(REP_OF_MY_OPENPYSCAD)
+import openpyscad
+from openpyscad import Cylinder, Cube, Union
+
 from openpyscad import *
+
 
 # from solid import scad_render_animated_file
 # from solid.objects import square, translate
@@ -39,7 +48,9 @@ function pos_y_sup(time) = time < 0.5
 
 def bar_2020(l):
     """Very symple representation of V-Slot"""
+    print(f"barre : 20x20 x {l} mm")
     return Cube([l, 20, 20])
+
 
 def solid_wheel():
     return Cylinder(r=solid_wheel_radius, h=solid_wheel_height)
@@ -100,14 +111,15 @@ def carcasse():
 
 def axis_y():
     u = Union()
-    u += slider_pour_20().color('DarkOrange').translate([Nonevaluated("position($t)"), 10, Z_LONG]).comment("slider 1")
-    u += slider_pour_20().color('DarkOrange').translate([Nonevaluated("position($t)"), Y_LONG - 10, Z_LONG]).comment("slider 2")
-    u += bar_2020(Y_LONG + 100).rotate([0, 0, 90]).color('red').translate([10,0,0]).translate([Nonevaluated("position($t)"), -30, Z_LONG]).comment("Y axis")
+    u += slider_pour_20().color('DarkOrange').translate([Nonevaluated("position($t)"), 10, Z_LONG]).comment("Y slider 1")
+    u += slider_pour_20().color('DarkOrange').translate([Nonevaluated("position($t)"), Y_LONG - 10, Z_LONG]).comment("Y slider 2")
+    u += bar_2020(Y_LONG + 100).rotate([0, 0, 90]).color('Purple', 0.5).translate([10,0,0]).translate([Nonevaluated("position($t)"), -30, Z_LONG]).comment("Y axis")
     return u
 
 def axis_y_sup():
+    """Partie mobile se déplacant le long de l'axe Y, en haut. """
     u = Union()
-    u += slider_pour_20().rotate([0,0,90]).color('LightBlue', 0.5).translate([Nonevaluated("position($t)"), 10, Z_LONG+ 20]).comment("slider 1")
+    u += slider_pour_20().rotate([0,0,90]).color('LightBlue', 0.8).translate([Nonevaluated("position($t)"), 10, Z_LONG+ 20]).comment("slider 1")
     return u.translate([-10 ,Nonevaluated("pos_y_sup($t)"), plateau.size[2]])
 
 if __name__ == '__main__':
@@ -120,6 +132,6 @@ if __name__ == '__main__':
     + axis_y().comment("End of AXIS_Y")
     + axis_y_sup().comment("End of AXIS_Y_SUP")
      ).write(output_file, prologue=scad_str)
-
+    print("Open result with OpenSCAD", output_file)
     # slider_pour_20().color('blue').write("robot.scad")
     # (slider_pour_20()).write(output_file)

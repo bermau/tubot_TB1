@@ -46,19 +46,30 @@ function pos_y_sup(time) = time < 0.5
 """.format(var1="60", var2=str(plate_y_offset*2))
 
 
-def bar_2020(l):
+def bar_2020(l, name=None):
     """Very symple representation of V-Slot"""
-    print(f"barre : 20x20 x {l} mm")
+    print(f"barre : 20x20 x {l} mm {name}")
     return Cube([l, 20, 20])
 
 
 def solid_wheel():
     return Cylinder(r=solid_wheel_radius, h=solid_wheel_height)
 
+# plateau A
+# Petit chatiot de type : https://fr.aliexpress.com/item/4000177052618.html
+chariot_mini = Cube([50, 50, 6.5]);
+# Chariot moyen type : https://fr.aliexpress.com/item/4000177052618.html
+chariot_medium = Cube ([65.5, 65.5, 3])
 plateau = Cube([100, 80, 3])
 
 def centrer_x(truc):
     return truc.translate([-truc.size[0]/2, 0, 0])
+
+def centrer_y(truc):
+    return truc.translate([0, -truc.size[1]/2, 0])
+
+def centrer_z(truc):
+    return truc.translate(0, 0, -truc.size[2]/2)
 
 def center(obj, x= True, y=True, z=True):
     """Center an object along its x, y, z axes"""
@@ -87,7 +98,7 @@ def slider_pour_20():
 
 def carcasse():
     u = Union()
-    bar_x = bar_2020(X_LONG)
+    bar_x = bar_2020(X_LONG, "barre x")
     Z_DEC = Z_LONG - 20
 
     u.append(bar_x)
@@ -95,13 +106,13 @@ def carcasse():
     u.append(bar_x.translate([0, Y_LONG-20, Z_DEC]))
     u.append(bar_x.translate([0, Y_LONG-20, 0]))
 
-    bar_y = bar_2020(Y_LONG-40).rotate([0, 0, 90]).translate([20, 20, 0]).color('Orange')
+    bar_y = bar_2020(Y_LONG-40, "barre y").rotate([0, 0, 90]).translate([20, 20, 0]).color('Orange')
     u.append(bar_y).translate([0, 0, Z_DEC])
     u.append(bar_y.translate([0, 0, Z_DEC]))
     u.append(bar_y.translate([X_LONG-20, 0, 0]))
     u.append(bar_y.translate([X_LONG - 20, 0, Z_DEC]))
     # u.append(bar_y.translate([0,Y_LONG,0]))
-    bar_z = bar_2020(Z_LONG-40).rotate([0, -90, 0]).translate([20, 0, 20]).color('Chartreuse')
+    bar_z = bar_2020(Z_LONG-40, "barre Z").rotate([0, -90, 0]).translate([20, 0, 20]).color('Chartreuse')
 
     u.append(bar_z)
     u.append(bar_z.translate([X_LONG-20, 0, 0]))
@@ -111,15 +122,15 @@ def carcasse():
 
 def axis_y():
     u = Union()
-    u += slider_pour_20().color('DarkOrange').translate([Nonevaluated("position($t)"), 10, Z_LONG]).comment("Y slider 1")
-    u += slider_pour_20().color('DarkOrange').translate([Nonevaluated("position($t)"), Y_LONG - 10, Z_LONG]).comment("Y slider 2")
-    u += bar_2020(Y_LONG + 100).rotate([0, 0, 90]).color('Purple', 0.5).translate([10,0,0]).translate([Nonevaluated("position($t)"), -30, Z_LONG]).comment("Y axis")
+    u += slider_pour_20().color('DarkOrange').translate([Nonevaluated("position($t)"), 10, Z_LONG]).post_comment("Y slider 1")
+    u += slider_pour_20().color('DarkOrange').translate([Nonevaluated("position($t)"), Y_LONG - 10, Z_LONG]).post_comment("Y slider 2")
+    u += bar_2020(Y_LONG + 100, "chariot y").rotate([0, 0, 90]).color('Purple', 0.5).translate([10,0,0]).translate([Nonevaluated("position($t)"), -30, Z_LONG]).post_comment("Y axis")
     return u
 
 def axis_y_sup():
     """Partie mobile se déplacant le long de l'axe Y, en haut. """
     u = Union()
-    u += slider_pour_20().rotate([0,0,90]).color('LightBlue', 0.8).translate([Nonevaluated("position($t)"), 10, Z_LONG+ 20]).comment("slider 1")
+    u += slider_pour_20().rotate([0,0,90]).color('LightBlue', 0.8).translate([Nonevaluated("position($t)"), 10, Z_LONG+ 20]).post_comment("slider 1")
     return u.translate([-10 ,Nonevaluated("pos_y_sup($t)"), plateau.size[2]])
 
 if __name__ == '__main__':
@@ -128,9 +139,9 @@ if __name__ == '__main__':
 
     # below : Noneval()
     (
-    carcasse().comment("End of CARCASSE")
-    + axis_y().comment("End of AXIS_Y")
-    + axis_y_sup().comment("End of AXIS_Y_SUP")
+    carcasse().post_comment("End of CARCASSE")
+    + axis_y().post_comment("End of AXIS_Y")
+    + axis_y_sup().post_comment("End of AXIS_Y_SUP")
      ).write(output_file, prologue=scad_str)
     print("Open result with OpenSCAD", output_file)
     # slider_pour_20().color('blue').write("robot.scad")

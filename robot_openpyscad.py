@@ -47,10 +47,14 @@ def bar_2020(l, name=None):
 # delrin mini
 solid_mini_wheel_radius = 15.23 / 2
 solid_mini_wheel_height = 8.8 
-def mini_wheel():
+def mini_wheel_OLD():
     return Cylinder(r=solid_mini_wheel_radius, h=solid_mini_wheel_height)
 
-
+class MiniWheel:
+    solid_mini_wheel_radius = 15.23 / 2
+    solid_mini_wheel_height = 8.8
+    def __init__(self):
+        self.struct = Cylinder(r=solid_mini_wheel_radius, h=solid_mini_wheel_height)
 
 # plateau A
 
@@ -75,10 +79,11 @@ def mini_slider_pour_20():
     # Petit chariot de type : https://fr.aliexpress.com/item/4000177052618.html
     chariot_mini = Cube([50, 50, 6.5]);
     u = Union()
-    wheel = mini_wheel()
+    wheel = MiniWheel().struct
+    # wheel = delrin.struct
     # ecart_x, ecart_y : ecart entre les axes des roues
-    ecart_y = 20 + solid_mini_wheel_radius * 2
-    ecart_x = 20 + solid_mini_wheel_radius * 2 + 20
+    ecart_y = 20 + MiniWheel.solid_mini_wheel_radius * 2
+    ecart_x = 20 + MiniWheel.solid_mini_wheel_radius * 2 + 20
     u.append(chariot_mini.translate([0, 0, 20]))
 
     wheel_group = Union()

@@ -10,7 +10,7 @@ import sys
 from local_conf import REP_OF_MY_OPENPYSCAD            # IMPORTANT see my version in bermau/openpyscad
 
 sys.path.append(REP_OF_MY_OPENPYSCAD)
-import openpyscad
+# import openpyscad
 from openpyscad import Cylinder, Cube, Union
 
 from openpyscad import *
@@ -25,8 +25,18 @@ eps = 0.01
 X_LONG = 330
 Y_LONG = 400 - 40 - 60
 Z_LONG = 330 - 80
-solid_wheel_radius = 12
+
+# J'ai pris des roues chez systeal.com. Modèle normale, non pas le xtrem. Taille BIG !!
+solid_wheel_radius = 23.90 /2 # Delrin V-slot wheels see : https://www.systeal.com/fr/roues-v-slot/1471-roue-v-slot-delrin.html
 solid_wheel_height = 11
+center_shift = 2.15           # La roue "rentre" dans le rail de cette valeur.
+
+# IKEA box x: largeur, y: profondeur , z: hauteur
+IKEABOX = [336, 389, 336]
+
+def draw_ikea_hole():
+    return Cube(IKEABOX)
+
 
 # Représentation, déplacements
 plate_x_offset = X_LONG - 114
@@ -66,10 +76,11 @@ def center(obj, x= True, y=True, z=True):
     return obj.translate([-obj.size[0]/2 * x, -obj.size[1]/2 * y, -obj.size[2]/2 * z])
 
 def slider_pour_20():
+
     u = Union()
     wheel = solid_wheel()
     # ecart_x, ecart_y : ecart entre les axes des roues
-    ecart_y = 20 + solid_wheel_radius*2
+    ecart_y = 20 + solid_wheel_radius*2 - center_shift*2
     ecart_x = 20 + solid_wheel_radius*2 + 20
     u.append(plateau.translate([0, 0, 20]))
 
@@ -87,6 +98,7 @@ def slider_pour_20():
     return u.translate([-plateau.size[0]/2,-plateau.size[1]/2,  -20])
 
 def carcasse():
+    """main frame"""
     u = Union()
     bar_x = bar_2020(X_LONG)
     Z_DEC = Z_LONG - 20
@@ -112,15 +124,16 @@ def carcasse():
 
 def axis_y():
     u = Union()
-    u += slider_pour_20().color('DarkOrange').translate([Nonevaluated("position($t)"), 10, Z_LONG]).comment("Y slider 1")
-    u += slider_pour_20().color('DarkOrange').translate([Nonevaluated("position($t)"), Y_LONG - 10, Z_LONG]).comment("Y slider 2")
-    u += bar_2020(Y_LONG + 60).rotate([0, 0, 90]).color('Purple', 0.5).translate([10,0,0]).translate([Nonevaluated("position($t)"), -30, Z_LONG]).comment("Y axis")
+    # u.post_comment("Début du chariot")
+    u += slider_pour_20().color('DarkOrange').translate([Nonevaluated("position($t)"), 10, Z_LONG]).comment("Début du chariot").post_comment("Y slider 1")
+    u += slider_pour_20().color('DarkOrange').translate([Nonevaluated("position($t)"), Y_LONG - 10, Z_LONG]).post_comment("Y slider 2")
+    u += bar_2020(Y_LONG + 60).rotate([0, 0, 90]).color('Purple', 0.5).translate([10,0,0]).translate([Nonevaluated("position($t)"), -30, Z_LONG]).post_comment("Y axis")
     return u
 
 def axis_y_sup():
-    """Partie mobile se déplacant le long de l'axe Y, en haut. """
+    """Partie mobile se déplaçant le long de l'axe Y, en haut. """
     u = Union()
-    u += slider_pour_20().rotate([0,0,90]).color('LightBlue', 0.8).translate([Nonevaluated("position($t)"), 10, Z_LONG+ 20]).comment("slider 1")
+    u += slider_pour_20().rotate([0,0,90]).color('LightBlue', 0.8).translate([Nonevaluated("position($t)"), 10, Z_LONG+ 20]).post_comment("slider 1")
     return u.translate([-10 ,Nonevaluated("pos_y_sup($t)"), plateau.size[2]])
 
 if __name__ == '__main__':
@@ -129,10 +142,12 @@ if __name__ == '__main__':
 
     # below : Noneval()
     (
-    carcasse().comment("End of CARCASSE")
-    + axis_y().comment("End of AXIS_Y")
-    + axis_y_sup().comment("End of AXIS_Y_SUP")
-     ).write(output_file, prologue=scad_str)
+
+    carcasse().post_comment("End of CARCASSE")
+    + axis_y().post_comment("End of AXIS_Y")
+    + axis_y_sup().post_comment("End of AXIS_Y_SUP")
+    + draw_ikea_hole().color("yellow", 0.2)
+    ).write(output_file, prologue=scad_str)
     print("Open result with OpenSCAD", output_file)
     # slider_pour_20().color('blue').write("robot.scad")
     # (slider_pour_20()).write(output_file)

@@ -94,19 +94,19 @@ union(){
                 translate(v=[-50.0, -40.0, -20]){
                     union(){
                         translate(v=[0, 0, 20]){
-                            cube(size=[100, 80, 3]);
+                            cube(size=[50, 50, 6.5]);
                         };
-                        translate(v=[18.0, 18.0, 4.5]){
+                        translate(v=[22.384999999999998, 22.384999999999998, 5.6]){
                             union(){
-                                cylinder(h=11, r=12);
-                                translate(v=[64, 0, 0]){
-                                    cylinder(h=11, r=12);
+                                cylinder(h=8.8, r=7.615);
+                                translate(v=[55.230000000000004, 0, 0]){
+                                    cylinder(h=8.8, r=7.615);
                                 };
-                                translate(v=[64, 44, 0]){
-                                    cylinder(h=11, r=12);
+                                translate(v=[55.230000000000004, 35.230000000000004, 0]){
+                                    cylinder(h=8.8, r=7.615);
                                 };
-                                translate(v=[0, 44, 0]){
-                                    cylinder(h=11, r=12);
+                                translate(v=[0, 35.230000000000004, 0]){
+                                    cylinder(h=8.8, r=7.615);
                                 };
                             };
                         };
@@ -119,19 +119,19 @@ union(){
                 translate(v=[-50.0, -40.0, -20]){
                     union(){
                         translate(v=[0, 0, 20]){
-                            cube(size=[100, 80, 3]);
+                            cube(size=[50, 50, 6.5]);
                         };
-                        translate(v=[18.0, 18.0, 4.5]){
+                        translate(v=[22.384999999999998, 22.384999999999998, 5.6]){
                             union(){
-                                cylinder(h=11, r=12);
-                                translate(v=[64, 0, 0]){
-                                    cylinder(h=11, r=12);
+                                cylinder(h=8.8, r=7.615);
+                                translate(v=[55.230000000000004, 0, 0]){
+                                    cylinder(h=8.8, r=7.615);
                                 };
-                                translate(v=[64, 44, 0]){
-                                    cylinder(h=11, r=12);
+                                translate(v=[55.230000000000004, 35.230000000000004, 0]){
+                                    cylinder(h=8.8, r=7.615);
                                 };
-                                translate(v=[0, 44, 0]){
-                                    cylinder(h=11, r=12);
+                                translate(v=[0, 35.230000000000004, 0]){
+                                    cylinder(h=8.8, r=7.615);
                                 };
                             };
                         };
@@ -148,7 +148,7 @@ union(){
                 };
             };
         }; // Y axis
-    }; // End of AXIS_Y
+    }; // End of AXIS_Y + 2 sliders
     translate(v=[-10, pos_y_sup($t), 3]){
         union(){
             translate(v=[position($t), 10, 320]){
@@ -157,19 +157,19 @@ union(){
                         translate(v=[-50.0, -40.0, -20]){
                             union(){
                                 translate(v=[0, 0, 20]){
-                                    cube(size=[100, 80, 3]);
+                                    cube(size=[50, 50, 6.5]);
                                 };
-                                translate(v=[18.0, 18.0, 4.5]){
+                                translate(v=[22.384999999999998, 22.384999999999998, 5.6]){
                                     union(){
-                                        cylinder(h=11, r=12);
-                                        translate(v=[64, 0, 0]){
-                                            cylinder(h=11, r=12);
+                                        cylinder(h=8.8, r=7.615);
+                                        translate(v=[55.230000000000004, 0, 0]){
+                                            cylinder(h=8.8, r=7.615);
                                         };
-                                        translate(v=[64, 44, 0]){
-                                            cylinder(h=11, r=12);
+                                        translate(v=[55.230000000000004, 35.230000000000004, 0]){
+                                            cylinder(h=8.8, r=7.615);
                                         };
-                                        translate(v=[0, 44, 0]){
-                                            cylinder(h=11, r=12);
+                                        translate(v=[0, 35.230000000000004, 0]){
+                                            cylinder(h=8.8, r=7.615);
                                         };
                                     };
                                 };

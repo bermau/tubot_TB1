@@ -14,6 +14,7 @@ import openpyscad
 from openpyscad import Cylinder, Cube, Union
 
 from openpyscad import *
+from common_tools_lib import bar_2020
 
 eps = 0.01
 X_LONG = 800
@@ -39,10 +40,7 @@ function pos_y_sup(time) = time < 0.5
 """.format(var1="60", var2=str(plate_y_offset*2))
 
 
-def bar_2020(l, name=None):
-    """Very symple representation of V-Slot"""
-    print(f"barre : 20x20 x {l} mm {name}")
-    return Cube([l, 20, 20])
+
 
 # delrin mini
 solid_mini_wheel_radius = 15.23 / 2

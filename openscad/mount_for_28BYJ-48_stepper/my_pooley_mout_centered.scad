@@ -83,14 +83,37 @@ m_profondeur = 1 ; // profondeur de la découpe pour loguer le moteur
       //  color("purple", 0.5) 
         cube([m_pattes_defixation,m_profondeur, pm_hole2_distance]);
         }
+    // couper les parties inutiles des coins
+    cut_x = 20;
+    cut_y = 20;// profondeur de coupe 
+    cut_h = 40; 
+        // coin haut gauche
+        translate([-pm_x/2, 0, +11])
+        rotate([0,-45-90,0]) 
+        translate([0,-15 ,-cut_h/2]) cube([cut_x, cut_y, cut_h]);     
+        // coin bas gauche
+        translate([-pm_x/2, 0, -11])
+        rotate([0,45+90,0]) 
+        translate([0,-15 ,-cut_h/2]) cube([cut_x, cut_y, cut_h]);
+        
+        // coin haut droit
+        //rotate(
+        translate([20, 0 , 20]) 
+        cube([cut_h, cut_y, cut_x], center = true);
+        // et son mirroir
+        mirror([0,0,90]) 
+        translate([20, 0 , 20]) 
+        cube([cut_h, cut_y, cut_x], center = true);
+        
     }; // end of diff
 };
 
-// On trace la bar
+// On trace la barre
+
 translate([-0, -0,-0]) 
 
 bar_20x20();
 
 // module de fixation
-//translate([0,-(bar_y+pm_y)/2, 0])
+translate([0-55,-(bar_y+pm_y)/2, 0])
 mount();

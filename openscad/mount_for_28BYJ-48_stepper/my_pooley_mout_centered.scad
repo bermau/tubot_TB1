@@ -1,15 +1,19 @@
 // Fixation d'un moteur 28BYJ-48 sur une barre V-slot 20x20 
+// v1 a été imprimé.
+//    *  La hauteur de la monture est insuffisante.
+//    *  dans les coupures de droites sont trop importantes.
+//    *  les deux trous de fixation sont un peu trop proches l'un de l'autre
 
-// bar
+// barre V-Slot
 bar_y = 20;
 bar_z = 20;
-// petite barre de guidage
+// petite barre de guidage (optionnelle)
 y_width_hole = 2 ;
 z_width_hole = 5.5 ;
 
 // pm : pooley_mount
 pm_x = 55; 
-pm_y = 3;
+pm_y = 4;
 pm_z = 50;
 
 
@@ -28,7 +32,7 @@ module hole_m4(){
 // pour fixer la monture, 2 trous de m5 distants de 10 mm.
 mp_hole1_r = 5/2 ;
 pm_hole1_d1 = 2 + 5;
-pm_hole1_d2 = pm_hole1_d1 + 10;
+pm_hole1_d2 = pm_hole1_d1 + 12;
 
 module mount(){
     pm_hole2_d = 40 ; // distance de percage des trous tenant le moteur / bord droit de la mouture
@@ -98,13 +102,15 @@ m_profondeur = 1 ; // profondeur de la découpe pour loguer le moteur
         
         // coin haut droit
         //rotate(
-        translate([20, 0 , 20]) 
+        translate([20, 0 , 26]) 
+        rotate([0,30,0])
         cube([cut_h, cut_y, cut_x], center = true);
         // et son mirroir
         mirror([0,0,90]) 
-        translate([20, 0 , 20]) 
+        translate([20, 0 , 26]) 
+        rotate([0,30,0])
         cube([cut_h, cut_y, cut_x], center = true);
-        
+     
     }; // end of diff
 };
 

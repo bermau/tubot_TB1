@@ -3,7 +3,9 @@
 //    *  La hauteur de la monture est insuffisante.
 //    *  dans les coupures de droites sont trop importantes.
 //    *  les deux trous de fixation sont un peu trop proches l'un de l'autre
-
+// V2 a été imprimé.
+// je dois déplacer les trous de fixation de la monture sur le rail. 
+// Faire  un trou dans la monture pour que le pignon ne frotte pas sur la monture.
 // barre V-Slot
 bar_y = 20;
 bar_z = 20;
@@ -31,7 +33,7 @@ module hole_m4(){
 
 // pour fixer la monture, 2 trous de m5 distants de 10 mm.
 mp_hole1_r = 5/2 ;
-pm_hole1_d1 = 2 + 5;
+pm_hole1_d1 = 0 + 5;
 pm_hole1_d2 = pm_hole1_d1 + 12;
 
 module mount(){
@@ -40,7 +42,7 @@ module mount(){
     pm_hole2_r = 4/2;
     // motor
 m_dist_to_shaft = 8 ; //
-m_shaft_hole_r = 10 /2;
+m_shaft_hole_r = (16 + 1) /2 ;
 m_radius = (28 + 0.5) / 2; // diamètre général pour la découpe
 m_pattes_defixation = 7 + 0.5;
 m_profondeur = 1 ; // profondeur de la découpe pour loguer le moteur 

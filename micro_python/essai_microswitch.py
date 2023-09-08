@@ -8,24 +8,25 @@ myStepMotor = Stepmotor(21, 20, 19, 18)
 # si pas de pull_DOWN, on obtient un signal erratique. 
 button = Pin(12, Pin.IN, Pin.PULL_DOWN)
 n = 0
-speed = 4000
+speed = 4 000
 
-step = 4 * 64
+step =  10 * 16
 pressed = False
 
-def move(dir):
+def move(dir, step=step):
+    print("step", step)
     if not pressed :
         myStepMotor.moveSteps(dir, step  , speed)
-        myStepMotor.stop()
+        # myStepMotor.stop()
         # time.sleep(0.05)
     else:
         print("Stop")
 
-def to_right():
-    move(0)
+def to_right( **kwargs):
+    move(0, **kwargs)
     
-def to_left():
-    move(1)
+def to_left(**kwargs):
+    move(1, **kwargs)
     
 def to_left_until_swith_is_pressed():
     encore = True

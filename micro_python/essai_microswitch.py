@@ -10,7 +10,7 @@ button = Pin(12, Pin.IN, Pin.PULL_DOWN)
 n = 0
 speed = 4000
 
-step = 1 * 16
+step = 4 * 64
 pressed = False
 
 def move(dir, step=step):

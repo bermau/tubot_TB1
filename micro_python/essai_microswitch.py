@@ -8,7 +8,8 @@ myStepMotor = Stepmotor(21, 20, 19, 18)
 # si pas de pull_DOWN, on obtient un signal erratique. 
 button = Pin(12, Pin.IN, Pin.PULL_DOWN)
 n = 0
-speed = 4000
+
+speed = 2000
 
 step = 4 * 64
 pressed = False

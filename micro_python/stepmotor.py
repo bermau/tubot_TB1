@@ -4,7 +4,7 @@ import time
 phasecw  = [0x08,0x04,0x02,0x01]
 phaseccw = [0x01,0x02,0x04,0x08]
 out=0x01
-
+print("Test")
 class Stepmotor(object):
     def __init__(self, A: int=21, B: int=20, C: int=19, D: int=18):
         self._A = Pin(A,Pin.OUT,0)

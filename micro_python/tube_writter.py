@@ -1,6 +1,51 @@
 from machine import Pin
+
 from stepmotor import Stepmotor
+from servo import Servo
+
 import time
+
+
+# pins :
+# IO/12 : switch for X
+# IO/ 18n 19n, 20, 21 : stepper X
+# test du servo pour axe Z (lever baisse l'outils crayon) en 14
+
+class BM_servo:
+    def __init__(self, pin):
+        self.servo = Servo(pin)
+        
+    def test(self):
+        print("entrée dans test")
+        self.servo.ServoAngle(0)
+        time.sleep(1)
+        self. servo.ServoAngle(180)
+        time.sleep(1)
+        self.servo.ServoAngle(0)
+        for j in range(3):
+            try:
+                for i in range(0, 180, 1):
+                    self.servo.ServoAngle(i)
+                    time.sleep_ms(15)
+                for i in range(180, 0, -1):
+                    self.servo.ServoAngle(i)
+                    time.sleep_ms(15)
+            except:
+                self. servo.deinit()
+                print("servo progblem during short test")
+    
+    def long_test(self):
+        for truc in range(3):
+            print(f"test {truc}")
+            try:
+                self.servo.ServoAngle(0)
+                time.sleep_ms(500)
+                self.servo.ServoAngle(180)
+                time.sleep_ms(1000)
+            except:
+                self. servo.deinit()
+                print("servo problem during long test")
+        
 
 
 class MonStepper(object):
@@ -37,7 +82,7 @@ class MonStepper(object):
         self.pressed = False
 
         while encore:
-            self.myStepMotor.moveSteps(1, 20, speed)
+            self.myStepMotor.moveSteps(1, 20, self.speed)
             but = button.value()
             time.sleep(0.001)
             if but == 1:  # debounce
@@ -46,7 +91,27 @@ class MonStepper(object):
                 if but2 == 1:
                     print("Pressed")
                     encore = False
+    def test(self):
+        for n in range(3):
+            print("Boucle sur X")
+            but = self.button.value()
+            time.sleep(0.001)
+            if but == 1:  # debounce
+                time.sleep(0.010)
+                but2 = self.button.value()
+                if but2 == 1:
+                    print("Pressed")
+                    self.pressed = True
 
+            # Il semble que ce moteur soit très lent. Le dernier paramètre
+            # ne doit pas être inférieur à 2000. 
+            self.to_right()
+            self.to_left()
+
+            time.sleep(0.2)
+
+            print(f"Fin du cycle {n}")
+        
 
 # A switch (NO : normaly opened) is connected : one pin is connected to 3.3V,
 # the other pin is connected to GP12. No resistance, so
@@ -56,23 +121,27 @@ class MonStepper(object):
 print("STRATING")
 
 X = MonStepper()
-n = 0
 
-while True:
-    but = X.button.value()
-    time.sleep(0.001)
-    if but == 1:  # debounce
-        time.sleep(0.010)
-        but2 = X.button.value()
-        if but2 == 1:
-            print("Pressed")
-            X.pressed = True
+Y = BM_servo(16)
 
-    # Il semble que ce moteur soit très lent. Le dernier paramètre
-    # ne doit pas être inférieur à 2000. 
-    X.to_right()
-    X.to_left()
+time.sleep(1)
+# 
+# Y.servo.ServoAngle(0)
+# time.sleep(0.5)
+# Y.servo.ServoAngle(30)
+# Y.servo.ServoAngle(0)
+# time.sleep(0.5)
+# Y.servo.ServoAngle(30)
+# Y.servo.ServoAngle(0)
+# time.sleep(0.5)
+# Y.servo.ServoAngle(30)
 
-    time.sleep(0.2)
-    n += 1
-    print(f"Fin du cycle {n}")
+print("Moteurs initialisés")
+for i in range(10):
+    print ("test", i)
+    print("Lancement des tests sur Y")
+    Y.long_test()
+    print("Lancement des tests sur X")
+    X.test()
+print("OK !")
+ 

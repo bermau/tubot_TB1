@@ -45,8 +45,32 @@ class BM_servo:
             except:
                 self. servo.deinit()
                 print("servo problem during long test")
-        
 
+
+class Pen(BM_servo):
+    def __init__(self, pin):
+        super().__init__(pin)
+        
+    def up(self):
+        print('up')
+        self.servo.ServoAngle(35)
+        time.sleep_ms(50)
+        
+    def down(self):
+        print('down')
+        self.servo.ServoAngle(25)
+        time.sleep_ms(50)     
+
+class Rot(BM_servo):
+    def __init__(self, pin):
+        super().__init__(pin)
+    
+    def zero(self):
+        self.servo.ServoAngle(0)
+        
+    def Y(self, value):
+        self.servo.ServoAngle(value)
+    
 
 class MonStepper(object):
     def __init__(self):
@@ -75,7 +99,6 @@ class MonStepper(object):
     def stop(self):
         self.myStepMotor.stop()
     
-
     def to_right(self, **kwargs):
         self.move(0, **kwargs)
         self.stop()
@@ -90,7 +113,7 @@ class MonStepper(object):
 
         while encore:
             self.myStepMotor.moveSteps(1, 20, self.speed)
-            but = button.value()
+            but = self.button.value()
             time.sleep(0.001)
             if but == 1:  # debounce
                 time.sleep(0.010)
@@ -130,29 +153,49 @@ print("STRATING")
 
 X = MonStepper()
 
-pen = BM_servo(16)
-rot = BM_servo(17)
+pen = Pen(16)
+rot = Rot(17)
 
-time.sleep(1)
-# 
-# Y.servo.ServoAngle(0)
-# time.sleep(0.5)
-# Y.servo.ServoAngle(30)
-# Y.servo.ServoAngle(0)
-# time.sleep(0.5)
-# Y.servo.ServoAngle(30)
-# Y.servo.ServoAngle(0)
-# time.sleep(0.5)
-# Y.servo.ServoAngle(30)
+time.sleep(0.1)
 
-print("Moteurs initialisés")
-for i in range(10):
-    print ("test", i)
-    print("test rotation")
-    rot.test()
-    print("Lancement des tests sur pen")
-    pen.long_test()
-    print("Lancement des tests sur axe_ X")
-    X.test()
-print("OK !")
+pen.up()
+time.sleep(0.5)  
+
+
+def demo1():
+    time.sleep(2)
+    long = 600
+    rot.zero()
+    time.sleep(0.2)
+    rot.Y(30)
+    time.sleep(0.2)
+    pen.down()
+    time.sleep(0.5)
+    
+    X.to_right(step = long)
+    rot.Y(90)
+    time.sleep(0.3)
+    X.to_left(step= long)
+    rot.Y(30)
+    time.sleep(0.2)
+    
+    pen.up()
+    
+
+demo1()
+demo1()
+demo1()
+demo1()
+demo1()
+
+# print("Moteurs initialisés")
+# for i in range(10):
+#     print ("test", i)
+#     print("test rotation")
+#     rot.test()
+#     print("Lancement des tests sur pen")
+#     pen.long_test()
+#     print("Lancement des tests sur axe_ X")
+#     X.test()
+# print("OK !")
  

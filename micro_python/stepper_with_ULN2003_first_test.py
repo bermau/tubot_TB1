@@ -8,8 +8,6 @@ import time
 myStepMotor = Stepmotor(21, 20, 19, 18)
 
 
-input("encore ???")
-
 while True:
     # Il semble que ce moteur soit très lent. Le denier paramètre
     # ne doit pas être inférieur à 2000. 

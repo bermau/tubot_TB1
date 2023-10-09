@@ -62,6 +62,7 @@ class MonStepper(object):
         self.pressed = False
         print("Fin de Init")
 
+    
     def move(self, dir, step=None):
         if step is None:
             step = self.step
@@ -70,13 +71,19 @@ class MonStepper(object):
             self.myStepMotor.moveSteps(dir, step, self.speed)
         else:
             print("Stop")
+    
+    def stop(self):
+        self.myStepMotor.stop()
+    
 
     def to_right(self, **kwargs):
         self.move(0, **kwargs)
+        self.stop()
 
     def to_left(self, **kwargs):
         self.move(1, **kwargs)
-
+        self.stop()
+        
     def to_left_until_swith_is_pressed(self):
         encore = True
         self.pressed = False
@@ -109,6 +116,7 @@ class MonStepper(object):
             self.to_left()
 
             time.sleep(0.2)
+            self.myStepMotor.stop()	
 
             print(f"Fin du cycle {n}")
         
@@ -122,7 +130,8 @@ print("STRATING")
 
 X = MonStepper()
 
-Y = BM_servo(16)
+pen = BM_servo(16)
+rot = BM_servo(17)
 
 time.sleep(1)
 # 
@@ -139,9 +148,11 @@ time.sleep(1)
 print("Moteurs initialisés")
 for i in range(10):
     print ("test", i)
-    print("Lancement des tests sur Y")
-    Y.long_test()
-    print("Lancement des tests sur X")
+    print("test rotation")
+    rot.test()
+    print("Lancement des tests sur pen")
+    pen.long_test()
+    print("Lancement des tests sur axe_ X")
     X.test()
 print("OK !")
  

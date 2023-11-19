@@ -1,12 +1,14 @@
 # Définir les broches pour chaque segment et le point décimal
 
-x = 200   # steps
-y = 30    # degrés !
 
 
 class DrawingSystem():
     def __init__(self, type):
         self.type = type
+        if type == 'tube_writter':
+            self.x = 200    # steps
+            self.y = 30     # degrees
+
 
     def draw_segment(self, A, B):
         if self.type == 'tube_writter':
@@ -16,7 +18,7 @@ class DrawingSystem():
 
     def avance(self):
         if self.type == 'tube_writter':
-            print(f"Avance de {x * 1.1} ")
+            print(f"Avance de {self.x * 1.1} ")
 
     def up(self):
         pass
@@ -26,14 +28,14 @@ class DrawingSystem():
 
 class Segments():
     # on doit définir les Segments :
-    segments = {0: [[0, 0], [x, 0]],
-                1: [[x, 0], [x, y]],
-                2: [[x, y], [x, 2 * y]],
-                3: [[x, 2 * y], [0, 2 * y]],
-                4: [[0, 2 * y], [0, y]],
-                5: [[0, y], [0, 0]],
-                6: [[0, y], [x, y]],
-                'dot': [[int(x + 1.1), 2 * y], [int(x + 1.1), 2 * y]]
+    segments = {0: [[0, 0], [1, 0]],
+                1: [[1, 0], [1, 1]],
+                2: [[1, 1], [1, 2]],
+                3: [[1, 2 ], [0, 2 ]],
+                4: [[0, 2], [0, 1]],
+                5: [[0, 1], [0, 0]],
+                6: [[0, 1], [1, 1]],
+                'dot': [[int(1 + 1.1), 2], [int(1 + 1.1), 2]]
                 }
 
     # Définition des chiffres et de leur configuration respective
@@ -81,13 +83,19 @@ class Segments():
             self.display_digit(int(letter))  # PAS logieque : ordre à donner au robot
             self.effector.avance()
 
+class Main():
+    def __int__(self, tw, segments):
+        self.tool = tw
+        self.seg = segments
+
+    def display_text(self, txt):
+        for letter in txt:
+            self.tool.
 
 
 if __name__ == '__main__':
-    print("Beginning...")
-    tube_writter = DrawingSystem('tube_writter')
+    tw = DrawingSystem('tube_writter')
+    s = Segments(tw)
+    m = Main(tw, s)
 
-    S = Segments(tube_writter)
-    S.display_digit(2)
-    S.display_text("282")
-
+    m.display_text("282")

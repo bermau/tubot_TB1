@@ -7,6 +7,7 @@
 // je dois déplacer les trous de fixation de la monture sur le rail. 
 // Faire  un trou dans la monture pour que le pignon ne frotte pas sur la monture.
 // barre V-Slot
+// Agrandir ce trou
 bar_y = 20;
 bar_z = 20;
 // petite barre de guidage (optionnelle)
@@ -42,7 +43,7 @@ module mount(){
     pm_hole2_r = 4/2;
     // motor
 m_dist_to_shaft = 8 ; //
-m_shaft_hole_r = (16 + 1) /2 ;
+m_shaft_hole_r = (16 + 1.5) /2 ;
 m_radius = (28 + 0.5) / 2; // diamètre général pour la découpe
 m_pattes_defixation = 7 + 0.5;
 m_profondeur = 1 ; // profondeur de la découpe pour loguer le moteur 

@@ -42,6 +42,10 @@ AA.replace_regex(r"F\d{4}\.\d","")
 AA.replace_regex(r"F\d{3}\.\d","")
 AA.replace_regex("G01", "G0")
 
+# Il reste le problème des G28 de départ
+# Vers fin, faire un G0 Z1
+
+
 # AA.replace_regex("")
 AA.cat(quiet=True)
 if output_file:

@@ -1,14 +1,5 @@
-// Fixation d'un moteur 28BYJ-48 sur une barre V-slot 20x20 
-// v1 a été imprimé.
-//    *  La hauteur de la monture est insuffisante.
-//    *  dans les coupures de droites sont trop importantes.
-//    *  les deux trous de fixation sont un peu trop proches l'un de l'autre
-// V2 a été imprimé.
-// je dois déplacer les trous de fixation de la monture sur le rail. 
-// Faire  un trou dans la monture pour que le pignon ne frotte pas sur la monture.
-// barre V-Slot
-
-// nov 2023 : versino pour fixer un second moteur.abs
+// Fixation d'un moteur 28BYJ-48 au milieu d'une barre V-slot 20x20
+// nov 2023 : version pour fixer un second moteur, qui n'est pas aligué sur l'axe du V-slot.
 
 bar_y = 20;
 bar_z = 20;

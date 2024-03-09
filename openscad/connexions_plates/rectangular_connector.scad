@@ -1,11 +1,14 @@
 // v1
 // Pour raccorder 2 V-slots
-
-A_x = 60;
+// arrondir les angles
+include <./MCAD/boxes.scad>
+// exemple !
+// roundedBox([20, 30, 40], 2, true);
+A_x = 40;
 B_x = 40;
 
-A_y =A_x;
-B_y= B_x;
+A_y = A_x;
+B_y=  B_x;
 
 epp = 4 ;
 
@@ -14,7 +17,9 @@ dia = 5 ;  // diameter of holes
 
 module connector(){
     difference() {
-    cube([A_x, B_y, epp]);
+    // cube([A_x, B_y, epp]);
+        translate([A_x/2, B_y/2, epp/2])
+    roundedBox([A_x, B_y, epp], 2, true, $fn=20);
     {
         // holes on X axis
         for (i = [ 0 : 2 ]) {

@@ -9,17 +9,17 @@ import time
 # pins :
 # IO/12 : switch for X
 # IO/ 18n 19n, 20, 21 : stepper X
-# test du servo pour axe Z (lever baisse l'outils crayon) en 14
+# test du servo pour axe Z (lever baisse l'outil crayon) en 14
 
 class BM_servo:
     def __init__(self, pin):
         self.servo = Servo(pin)
-        
+
     def test(self):
         print("entrée dans test")
         self.servo.ServoAngle(0)
         time.sleep(1)
-        self. servo.ServoAngle(180)
+        self.servo.ServoAngle(180)
         time.sleep(1)
         self.servo.ServoAngle(0)
         for j in range(3):
@@ -31,9 +31,9 @@ class BM_servo:
                     self.servo.ServoAngle(i)
                     time.sleep_ms(15)
             except:
-                self. servo.deinit()
+                self.servo.deinit()
                 print("servo progblem during short test")
-    
+
     def long_test(self):
         for truc in range(3):
             print(f"test {truc}")
@@ -43,34 +43,35 @@ class BM_servo:
                 self.servo.ServoAngle(180)
                 time.sleep_ms(1000)
             except:
-                self. servo.deinit()
+                self.servo.deinit()
                 print("servo problem during long test")
 
 
 class Pen(BM_servo):
     def __init__(self, pin):
         super().__init__(pin)
-        
+
     def up(self):
         print('up')
         self.servo.ServoAngle(35)
         time.sleep_ms(50)
-        
+
     def down(self):
         print('down')
         self.servo.ServoAngle(25)
-        time.sleep_ms(50)     
+        time.sleep_ms(50)
+
 
 class Rot(BM_servo):
     def __init__(self, pin):
         super().__init__(pin)
-    
+
     def zero(self):
         self.servo.ServoAngle(0)
-        
+
     def Y(self, value):
         self.servo.ServoAngle(value)
-    
+
 
 class MonStepper(object):
     def __init__(self):
@@ -86,7 +87,6 @@ class MonStepper(object):
         self.pressed = False
         print("Fin de Init")
 
-    
     def move(self, dir, step=None):
         if step is None:
             step = self.step
@@ -95,10 +95,10 @@ class MonStepper(object):
             self.myStepMotor.moveSteps(dir, step, self.speed)
         else:
             print("Stop")
-    
+
     def stop(self):
         self.myStepMotor.stop()
-    
+
     def to_right(self, **kwargs):
         self.move(0, **kwargs)
         self.stop()
@@ -106,7 +106,7 @@ class MonStepper(object):
     def to_left(self, **kwargs):
         self.move(1, **kwargs)
         self.stop()
-        
+
     def to_left_until_swith_is_pressed(self):
         encore = True
         self.pressed = False
@@ -121,6 +121,7 @@ class MonStepper(object):
                 if but2 == 1:
                     print("Pressed")
                     encore = False
+
     def test(self):
         for n in range(3):
             print("Boucle sur X")
@@ -139,10 +140,10 @@ class MonStepper(object):
             self.to_left()
 
             time.sleep(0.2)
-            self.myStepMotor.stop()	
+            self.myStepMotor.stop()
 
             print(f"Fin du cycle {n}")
-        
+
 
 # A switch (NO : normaly opened) is connected : one pin is connected to 3.3V,
 # the other pin is connected to GP12. No resistance, so
@@ -159,7 +160,7 @@ rot = Rot(17)
 time.sleep(0.1)
 
 pen.up()
-time.sleep(0.5)  
+time.sleep(0.5)
 
 
 def demo1():
@@ -171,16 +172,16 @@ def demo1():
     time.sleep(0.2)
     pen.down()
     time.sleep(0.5)
-    
-    X.to_right(step = long)
+
+    X.to_right(step=long)
     rot.Y(90)
     time.sleep(0.3)
-    X.to_left(step= long)
+    X.to_left(step=long)
     rot.Y(30)
     time.sleep(0.2)
-    
+
     pen.up()
-    
+
 
 demo1()
 demo1()
@@ -198,4 +199,3 @@ demo1()
 #     print("Lancement des tests sur axe_ X")
 #     X.test()
 # print("OK !")
- 

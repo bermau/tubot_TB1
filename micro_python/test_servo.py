@@ -1,4 +1,4 @@
-# test du servo en 16
+# test du servo en 16 (position logique)
 
 from servo import Servo
 
@@ -28,8 +28,8 @@ class BM_servo:
 #                 print("servo problem during short test")
     
     def long_test(self):
-        for truc in range(10):
-            print(f"test{truc}")
+        for truc in range(3):
+            print(f"test : {truc}")
             try:
                 self.servo.ServoAngle(0)
                 time.sleep_ms(500)
@@ -56,10 +56,8 @@ class BM_servo:
         self.servo.ServoAngle(25)
         time.sleep_ms(50)   
 
-Y = BM_servo(16)
-for i in range(10):
-    # Y.test_pen()
-    Y.test()
-
-    
-    # Y.long_test()
+Y = BM_servo(16) # position logique
+for i in range(2):
+    #Y.test_pen()
+    # Y.test()   
+    Y.long_test()

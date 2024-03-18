@@ -3,16 +3,22 @@
 // this has been adaptated to metric m3.
 
 // data are Adaptated from https://docs.rs-online.com/56c1/A700000008608173.pdf
-x_l = 20 +27 ;
-x_4 = 29 ; // where starts the first hole
-x_3 = 9 ; // distance bethween holes
-x_sliding = 4 ; // sliding zone
+// replaced 2 holes by a single one
+// used rounded boxes
 
-$fn= 30;
+include <./MCAD/boxes.scad>
 
-y_l = 20;
-y_d1 = y_l - (9.6 - 2.4) ;
-y_d2 = (9.6 - 2.4)  ;
+
+x_l = 20  + 27 ;
+x_4 = 20  ; // where starts the first hole
+x_sliding = 13 ; // sliding zone
+
+$fn= 32;
+
+y_l = 20 ;
+y_hole_to_edge = (9.6 - 2.4 ); 
+y_d1 = y_l - y_hole_to_edge ;
+y_d2 = y_hole_to_edge  ;
 
 
 dia = 3 ;  // The original hole (2.25 mm) have been enlarged to 3 mm.
@@ -40,12 +46,9 @@ module hole( dia = 2, pos= [0,0,0]){
 module mount(){
     difference(){
     union(){
-        cube([x_l, y_l, z_h]);
-        translate([10,0,0])
-        // rainure_y(20);
-        // on ajoute une rainre de placement
-        
-        }
+        translate([x_l/2, y_l/2, z_h/2])
+        roundedBox([x_l, y_l, z_h], 2, true, $fn=20);
+     }
     // holes for the switch
        hull(){
     hole(dia= dia, pos = [x_4, y_d1, 0 ] );
@@ -65,12 +68,7 @@ module mount(){
         hole(dia= dia, pos = [x_4 + 9 + x_sliding, y_d2,0]);       
         
         }
-//    // coupure en biais
-//        
-//        translate([36,0,0])
-//        rotate([0,0,45])
-//        translate([0, -15, 0])
-//        cube([100,30, 20], center= true);
+
     // holes for V-slot M5 nuts
         hole(dia= 5, pos= [10, 4, 0]);
         hole(dia= 5, pos= [10, 16, 0]);

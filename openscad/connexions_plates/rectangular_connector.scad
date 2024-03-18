@@ -6,17 +6,17 @@
 include <./MCAD/boxes.scad>
 // exemple !
 // roundedBox([20, 30, 40], 2, true);
-A_x = 40;
+A_x = 20;
 B_y = 40;
 
-edge = 1 ; // enlever cette valeur des bords.
-epp = 4 ;
+edge = 0.5 ; // enlever cette valeur des bords.
+// epp = 4 ;
 
 dia = 5 ;  // diameter of holes
 eps = 0.01 ; 
 
 
-module connector(A, B){
+module connector(A, B, epp){
     difference() {
     // cube([A_x, B_y, epp]);
         translate([A/2, B/2, epp/2])
@@ -37,10 +37,16 @@ module connector(A, B){
 }
 
 module narrow_connector(){
-    connector(A_x, B_y); 
+    connector(A_x, B_y, epp = 4); 
 };
 
-narrow_connector(); 
+module join(){
+    connector(A_x, B_y, epp = 0.8); 
+}
+
+// narrow_connector();
+join();
+
 
 
 // connector();
